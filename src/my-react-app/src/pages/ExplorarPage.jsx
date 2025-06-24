@@ -1,38 +1,28 @@
-// src/pages/ExplorarPage.jsx
-
 import React, { useState } from 'react';
+import EventList from '../components/EventList/EventList';
 import FiltroPreco from '../components/FiltroPreco/FiltroPreco';
 
 const eventosMock = [
-  { id: 1, nome: 'Festival do Sol', preco: 150 },
-  { id: 2, nome: 'Rock na Praia', preco: 300 },
-  { id: 3, nome: 'Jazz ao Ar Livre', preco: 90 },
-  { id: 4, nome: 'Eletrônica Invasion', preco: 250 },
+  { id: 1, nome: 'Festival de Rock', date: '10/07/2025', price: 150 },
+  { id: 2, nome: 'Samba na Praça', date: '15/07/2025', price: 50 },
+  { id: 3, nome: 'Show de Jazz', date: '20/07/2025', price: 100 },
 ];
 
 const ExplorarPage = () => {
-  const [filtros, setFiltros] = useState({ min: 0, max: Infinity });
+  const [eventosFiltrados, setEventosFiltrados] = useState(eventosMock);
 
-  const eventosFiltrados = eventosMock.filter(evento =>
-    evento.preco >= filtros.min && evento.preco <= filtros.max
-  );
+  const filtrarPorPreco = (min, max) => {
+    const filtrados = eventosMock.filter(
+      (evento) => evento.price >= min && evento.price <= max
+    );
+    setEventosFiltrados(filtrados);
+  };
 
   return (
     <div>
-      <h1>Explorar Eventos</h1>
-      <FiltroPreco onFiltrar={setFiltros} />
-
-      {eventosFiltrados.length > 0 ? (
-        <ul>
-          {eventosFiltrados.map((evento) => (
-            <li key={evento.id}>
-              {evento.nome} - R${evento.preco}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Nenhum evento encontrado dentro da faixa de preço.</p>
-      )}
+      <h2>Explorar Eventos</h2>
+      <FiltroPreco onFiltrar={filtrarPorPreco} />
+      <EventList eventos={eventosFiltrados} />
     </div>
   );
 };

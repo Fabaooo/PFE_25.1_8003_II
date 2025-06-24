@@ -1,39 +1,30 @@
-// src/components/FiltroPreco/FiltroPreco.jsx
-
 import React, { useState } from 'react';
 
 const FiltroPreco = ({ onFiltrar }) => {
-  const [precoMin, setPrecoMin] = useState('');
-  const [precoMax, setPrecoMax] = useState('');
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
 
-  const handleFiltrar = (e) => {
-    e.preventDefault();
-    onFiltrar({
-      min: precoMin ? parseFloat(precoMin) : 0,
-      max: precoMax ? parseFloat(precoMax) : Infinity,
-    });
+  const handleFiltrar = () => {
+    onFiltrar(Number(min), Number(max));
   };
 
   return (
-    <form onSubmit={handleFiltrar} style={{ marginBottom: '20px' }}>
-      <label>
-        Preço Mínimo:
-        <input
-          type="number"
-          value={precoMin}
-          onChange={(e) => setPrecoMin(e.target.value)}
-        />
-      </label>
-      <label style={{ marginLeft: '10px' }}>
-        Preço Máximo:
-        <input
-          type="number"
-          value={precoMax}
-          onChange={(e) => setPrecoMax(e.target.value)}
-        />
-      </label>
-      <button type="submit" style={{ marginLeft: '10px' }}>Aplicar Filtro</button>
-    </form>
+    <div className="filtro-preco">
+      <h3>Filtrar por preço</h3>
+      <input
+        type="number"
+        placeholder="Mínimo"
+        value={min}
+        onChange={(e) => setMin(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Máximo"
+        value={max}
+        onChange={(e) => setMax(e.target.value)}
+      />
+      <button onClick={handleFiltrar}>Aplicar Filtro</button>
+    </div>
   );
 };
 

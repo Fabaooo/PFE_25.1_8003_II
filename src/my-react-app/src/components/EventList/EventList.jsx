@@ -1,21 +1,16 @@
 import React from 'react';
-import './EventList.css';
 
 const EventList = ({ eventos }) => {
-  if (!eventos || eventos.length === 0) {
-    return <p>Nenhum evento encontrado.</p>;
-  }
-
   return (
-    <ul className="event-list">
+    <div className="event-list">
       {eventos.map((evento) => (
-        <li key={evento.id} className="event-item">
+        <div key={evento.id} className="evento">
           <h3>{evento.nome}</h3>
-          <p>Data: {evento.data}</p>
-          <p>Preço: R$ {Number(evento.price).toFixed(2)}</p>
-        </li>
+          <p>Data: {evento.date}</p>
+          <p>Preço: R$ {evento.price}</p>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 
