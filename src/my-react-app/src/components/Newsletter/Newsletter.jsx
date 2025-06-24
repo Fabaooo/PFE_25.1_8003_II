@@ -1,31 +1,36 @@
-import { Link } from 'react-router-dom';
-import './Newsletter.css';
+import React, { useState } from 'react';
 
+const Newsletter = () => {
+  const [email, setEmail] = useState('');
+  const [sucesso, setSucesso] = useState(false); // novo estado
 
-function Newsletter() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Aqui poderia ter lógica de envio para o backend
+    if (email.trim() !== '') {
+      setSucesso(true); // ativa a mensagem
+      setEmail(''); // limpa o campo
+    }
+  };
+
   return (
-    <section className="newsletter-section">
-      <div className="newsletter-container">
-        <div className="newsletter-text">
-          <h2>Lançamentos e novidades</h2>
-          <p>Receba nossa newsletter com tendências, promoções e mais</p>
-        </div>
-        <form className="newsletter-form">
-          <label htmlFor="email">Seu e-mail</label>
-          <div className="input-group">
-            <input type="email" id="email" name="email" required />
-            <button type="submit">Cadastrar</button>
-          </div>
-          <div className="checkbox-group">
-            <input type="checkbox" id="privacy" required />
-            <label htmlFor="privacy">
-              Aceito receber conteúdos e concordo com a <a href="#">Política de Privacidade</a>.
-            </label>
-          </div>
-        </form>
-      </div>
-    </section>
+    <div style={{ padding: '20px' }}>
+      <h2>Assine a Newsletter</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Seu e-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      {/* Mensagem de sucesso */}
+      {sucesso && <p style={{ color: 'green' }}>Cadastro realizado!</p>}
+    </div>
   );
-}
+};
 
 export default Newsletter;
