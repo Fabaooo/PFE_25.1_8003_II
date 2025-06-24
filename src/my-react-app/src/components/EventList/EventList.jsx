@@ -1,29 +1,22 @@
-
-
 import React from 'react';
 import './EventList.css';
-import teatro1 from '../../assets/teatro1.jpg'; 
 
+const EventList = ({ eventos }) => {
+  if (!eventos || eventos.length === 0) {
+    return <p>Nenhum evento encontrado.</p>;
+  }
 
-function EventList({ events }) {
   return (
-    <main className="event-list-container">
-      {events.length > 0 ? (
-        <div className="event-grid">
-          {events.map(event => (
-            <div className="event-card" key={event.id}>
-              <img src={teatro1} alt={event.name} />
-              <h3>{event.name}</h3>
-              <p>{event.location}</p>
-              <p>{new Date(event.date).toLocaleDateString('pt-BR')}</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Nenhum evento encontrado com os filtros selecionados.</p>
-      )}
-    </main>
+    <ul className="event-list">
+      {eventos.map((evento) => (
+        <li key={evento.id} className="event-item">
+          <h3>{evento.nome}</h3>
+          <p>Data: {evento.data}</p>
+          <p>Preço: R$ {Number(evento.price).toFixed(2)}</p>
+        </li>
+      ))}
+    </ul>
   );
-}
+};
 
 export default EventList;

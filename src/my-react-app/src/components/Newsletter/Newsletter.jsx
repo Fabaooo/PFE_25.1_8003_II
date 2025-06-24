@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
+import './Newsletter.css';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
-  const [sucesso, setSucesso] = useState(false); // novo estado
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Aqui poderia ter lógica de envio para o backend
-    if (email.trim() !== '') {
-      setSucesso(true); // ativa a mensagem
-      setEmail(''); // limpa o campo
-    }
+    setIsSubmitted(true);
+    setEmail('');
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Assine a Newsletter</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Seu e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit">Cadastrar</button>
-      </form>
+    <div className="newsletter">
+      <h2>Assine a nossa Newsletter</h2>
 
-      {/* Mensagem de sucesso */}
-      {sucesso && <p style={{ color: 'green' }}>Cadastro realizado!</p>}
+      {!isSubmitted ? (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Digite seu e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button type="submit">Cadastrar</button>
+        </form>
+      ) : (
+        <p className="success-message">Cadastro realizado!</p>
+      )}
     </div>
   );
 };
